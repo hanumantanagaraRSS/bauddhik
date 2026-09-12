@@ -1,544 +1,750 @@
-<html>
+<!DOCTYPE html>
+<html lang="kn">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2487.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>RSS Hanumantanagara Prati Generator</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, "Noto Sans Kannada", sans-serif;
+    background: #eee;
+    color: #222;
+}
+
+header {
+    background: #222;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 25px;
+    max-width: 1300px;
+    margin: auto;
+    padding: 20px;
+}
+
+.controls {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    height: fit-content;
+}
+
+.controls h2 {
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    margin-top: 5px;
+    padding: 9px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+textarea {
+    min-height: 70px;
+    resize: vertical;
+}
+
+button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 11px;
+    border: 0;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.primary {
+    background: #d35400;
+    color: white;
+}
+
+.secondary {
+    background: #333;
+    color: white;
+}
+
+.preview-area {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.side-title {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+/* A6 */
+.pamphlet {
+    width: 148mm;
+    height: 210mm;
+    background: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,.25);
+}
+
+/* Design */
+.pamphlet::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+    padding: 18mm 8mm 8mm;
+    height: 100%;
+    text-align: center;
+}
+
+.logo {
+    width: 25mm;
+    height: 25mm;
+    object-fit: contain;
+    margin: 0 auto 5px;
+    display: none;
+}
+
+.org {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: -12mm;
+}
+
+.main-title {
+    font-size: 16px;
+    margin-top: 3mm;
+    text-align: left;
+}
+
+.subtitle {
+    font-size: 16px;
+    margin-top: -7mm;
+    text-align: right;
+
+}
+
+.info {
+    margin-top: 1mm;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.geete {
+    margin-top: 2mm;
+    font-size: 15px;
+    line-height: 1.3;
+    white-space: pre-line;
+}
+
+.qr {
+    width: 28mm;
+    height: 28mm;
+    margin: 6mm auto 0;
+    display: none;
+}
+
+.footer {
+    position: absolute;
+    bottom: 5mm;
+    left: 7mm;
+    right: 7mm;
+    font-size: 11px;
+}
+
+.back-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: -12mm;
+}
+
+.back-text {
+    font-size: 14px;
+    line-height: 1.3    ;
+    text-align: center;
+    white-space: pre-line;
+
+}
+.backTitle{
+      margin-top: -10mm;
+      font-size: 16px;
+
+}
+
+.amrutavachanaHeading{
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 1mm;
+    white-space: pre-line;
+}
+
+.shlokaHeading {
+    font-size: 15px;
+    text-align: left;
+    font-weight: bold;
+    padding-left: 10mm;
+    margin-top: 2mm;
+}
+
+.amrutavachana{
+    font-size: 15px;
+    margin-top: 2mm;
+    white-space: pre-line;
+}
+
+.shloka {
+    font-size: 15px;
+    margin-top: 1mm;
+    white-space: pre-line;
+    text-align: left;
+}
+.meaningHeading{
+    font-size: 15px;
+    text-align: left;
+    font-weight: bold;
+    padding-left: 100mm;
+    margin-top: -30mm;
+}
+
+.meaning{
+    font-size: 15px;
+    text-align: left;
+    padding-left: 70mm;
+    margin-top: -1mm;
+}
+
+.pancha{
+font-size: 15px;
+}
+
+.datee{
+    font-size: 15px;
+    text-align: left;
+    margin-top: -1mm;
+    line-height: 1.7;
+}
+
+.thiti{
+    font-size: 15px;
+    text-align: left;
+    margin-top: -40mm;
+    padding-left: 30mm;
+    line-height: 1.4;
+    
+}
+
+.day{
+    font-size: 15px;
+    text-align: left;
+    margin-top: -39mm;
+    padding-left: 60mm;
+    line-height: 1.4;
+    
+}
+
+.nakshatra{
+    font-size: 15px;
+    text-align: left;
+    margin-top: -40mm;
+    padding-left: 90mm;
+    line-height: 1.4;
+    
+}
+@media(max-width:900px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* PRINT */
+@media print {
+
+    body {
+        background: white;
+    }
+
+    header,
+    .controls,
+    .side-title {
+        display: none;
+    }
+
+    .container {
+        display: flex;
+        gap: 10mm;
+        padding: 0;
+        margin: 0;
+    }
+
+    .preview-area {
+        display: flex;
+        gap: 10mm;
+    }
+
+    .pamphlet {
+        box-shadow: none;
+        page-break-inside: avoid;
+    }
+
+    @page {
+        size: A4;
+        margin: 10mm;
+    }
+}
+</style>
 </head>
+
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="kn"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1">&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1">&lt;meta name="viewport" content="width=device-width,initial-scale=1.0"&gt;</p>
-<p class="p1">&lt;title&gt;A6 Two-Side Pamphlet Generator&lt;/title&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;style&gt;</p>
-<p class="p1">* {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>box-sizing: border-box;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">body {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin: 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family: Arial, "Noto Sans Kannada", sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: #eee;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color: #222;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">header {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: #222;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-align: center;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.container {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: grid;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>grid-template-columns: 320px 1fr;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>gap: 25px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>max-width: 1300px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin: auto;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding: 20px;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.controls {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: white;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding: 18px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>height: fit-content;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.controls h2 {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 0;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">label {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: block;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight: bold;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">input,</p>
-<p class="p1">textarea,</p>
-<p class="p1">select {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 5px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding: 9px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid #bbb;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 6px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 14px;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">textarea {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>min-height: 70px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>resize: vertical;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">button {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding: 11px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border: 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 7px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight: bold;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.primary {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: #d35400;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color: white;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.secondary {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: #333;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color: white;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.preview-area {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>gap: 30px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>flex-wrap: wrap;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>justify-content: center;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.side-title {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight: bold;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 8px;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">/* A6 */</p>
-<p class="p1">.pamphlet {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>width: 105mm;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>height: 148mm;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: white;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position: relative;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>overflow: hidden;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>box-shadow: 0 5px 20px rgba(0,0,0,.25);</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">/* Design */</p>
-<p class="p1">.pamphlet::before {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>content: "";</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position: absolute;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>top: 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>left: 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>right: 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>height: 12mm;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: #e65100;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.content {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position: relative;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>z-index: 2;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding: 18mm 8mm 8mm;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>height: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-align: center;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.logo {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>width: 25mm;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>height: 25mm;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>object-fit: contain;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin: 0 auto 5px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: none;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.org {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight: bold;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 3mm;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.main-title {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 25px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 900;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color: #b23b00;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 8mm;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.subtitle {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 17px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight: bold;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 5mm;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.info {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 8mm;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.7;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.message {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 8mm;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 14px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.6;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.qr {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>width: 28mm;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>height: 28mm;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin: 6mm auto 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: none;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.footer {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position: absolute;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>bottom: 5mm;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>left: 7mm;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>right: 7mm;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 11px;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.back-title {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 21px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color: #b23b00;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight: bold;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 6mm;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">.back-text {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 13px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.65;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-align: left;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">@media(max-width:900px) {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.container {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>grid-template-columns: 1fr;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">/* PRINT */</p>
-<p class="p1">@media print {</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>background: white;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>header,</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.controls,</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.side-title {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>display: none;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.container {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>gap: 10mm;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>padding: 0;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>margin: 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.preview-area {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>gap: 10mm;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.pamphlet {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>box-shadow: none;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>page-break-inside: avoid;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>@page {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>size: A4;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>margin: 10mm;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1">}</p>
-<p class="p1">&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;header&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1&gt;A6 Two-Side Pamphlet Generator&lt;/h1&gt;</p>
-<p class="p1">&lt;/header&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="container"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="controls"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;h2&gt;✏️ Pamphlet Details&lt;/h2&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;label&gt;Organization&lt;/label&gt;</p>
-<p class="p1">&lt;input id="org" value="ರಾಷ್ಟ್ರೀಯ ಸ್ವಯಂಸೇವಕ ಸಂಘ, ಹನುಮಂತನಗರ"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;label&gt;Main Title&lt;/label&gt;</p>
-<p class="p1">&lt;input id="title" value="ವಸತಿ ಸಾಂಘಿಕ್"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;label&gt;Subtitle&lt;/label&gt;</p>
-<p class="p1">&lt;input id="subtitle" value="ಆಮಂತ್ರಣ"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;label&gt;Date&lt;/label&gt;</p>
-<p class="p1">&lt;input id="date" value="ಸೆಪ್ಟೆಂಬರ್ 13, 2026"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;label&gt;Time&lt;/label&gt;</p>
-<p class="p1">&lt;input id="time" value="ಬೆಳಿಗ್ಗೆ 6:45 ರಿಂದ 8:00 ಗಂಟೆ"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;label&gt;Venue&lt;/label&gt;</p>
-<p class="p1">&lt;input id="venue" value="ಡೊಂಕನ್ ಮೈದಾನ, ಶಂಕರನಾಗ ಸರ್ಕಲ್"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;label&gt;Main Message&lt;/label&gt;</p>
-<p class="p1">&lt;textarea id="message"&gt;ಸಮಾಜದ ಪ್ರತಿಯೊಬ್ಬರಲ್ಲೂ ರಾಷ್ಟ್ರಭಕ್ತಿ, ಸೇವಾ ಮನೋಭಾವ ಮತ್ತು ಸಂಘಟನಾ ಶಕ್ತಿಯನ್ನು ಬೆಳೆಸೋಣ.&lt;/textarea&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;label&gt;Back Page Heading&lt;/label&gt;</p>
-<p class="p1">&lt;input id="backTitle" value="ನಮ್ಮೊಂದಿಗೆ ಸೇರಿ"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;label&gt;Back Page Content&lt;/label&gt;</p>
-<p class="p1">&lt;textarea id="backText"&gt;ಶಾಖೆ ಎಂದರೆ ಕೇವಲ ಒಂದು ಕಾರ್ಯಕ್ರಮವಲ್ಲ.</p>
-<p class="p2"><br></p>
-<p class="p1">ಇದು ವ್ಯಕ್ತಿತ್ವ ನಿರ್ಮಾಣ, ಸಮಾಜ ಸಂಘಟನೆ ಮತ್ತು ರಾಷ್ಟ್ರ ಸೇವೆಯ ನಿರಂತರ ಪ್ರಕ್ರಿಯೆ.</p>
-<p class="p2"><br></p>
-<p class="p1">ನಿಮ್ಮ ಕುಟುಂಬ ಮತ್ತು ಸ್ನೇಹಿತರೊಂದಿಗೆ ಭಾಗವಹಿಸಿ.&lt;/textarea&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;label&gt;Footer&lt;/label&gt;</p>
-<p class="p1">&lt;input id="footer" value="10 ನಿಮಿಷ ಮುಂಚಿತವಾಗಿ ಆಗಮಿಸಿ"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;label&gt;Logo&lt;/label&gt;</p>
-<p class="p1">&lt;input type="file" id="logoUpload" accept="image/*"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;label&gt;QR Code&lt;/label&gt;</p>
-<p class="p1">&lt;input type="file" id="qrUpload" accept="image/*"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;button class="primary" onclick="window.print()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>🖨️ Print / Save PDF</p>
-<p class="p1">&lt;/button&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;button class="secondary" onclick="sampleData()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>🔄 Sample Data</p>
-<p class="p1">&lt;/button&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;button class="secondary" onclick="resetData()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>♻️ Reset</p>
-<p class="p1">&lt;/button&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="preview-area"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;!-- FRONT --&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div&gt;</p>
-<p class="p1">&lt;div class="side-title"&gt;FRONT SIDE&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="pamphlet" id="front"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="content"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;img id="logoFront" class="logo"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="org" id="pOrg"&gt;&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="main-title" id="pTitle"&gt;&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="subtitle" id="pSubtitle"&gt;&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="info"&gt;</p>
-<p class="p1">&lt;div id="pDate"&gt;&lt;/div&gt;</p>
-<p class="p1">&lt;div id="pTime"&gt;&lt;/div&gt;</p>
-<p class="p1">&lt;div id="pVenue"&gt;&lt;/div&gt;</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="message" id="pMessage"&gt;&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;img id="qrFront" class="qr"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="footer" id="pFooter"&gt;&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1">&lt;!-- BACK --&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div&gt;</p>
-<p class="p1">&lt;div class="side-title"&gt;BACK SIDE&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="pamphlet"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="content"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="back-title" id="pBackTitle"&gt;&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="back-text" id="pBackText"&gt;&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div style="margin-top:15mm;font-size:13px;"&gt;</p>
-<p class="p1">🚩 सेवा • ಸಂಘಟನೆ • ಸಂಸ್ಕಾರ</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="footer"&gt;</p>
-<p class="p1">ರಾಷ್ಟ್ರೀಯ ಸ್ವಯಂಸೇವಕ ಸಂಘ, ಹನುಮಂತನಗರ</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1">&lt;script&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">const fields = [</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"org",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"title",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"subtitle",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"date",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"time",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"venue",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"message",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"backTitle",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"backText",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"footer"</p>
-<p class="p1">];</p>
-<p class="p2"><br></p>
-<p class="p1">function update() {</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pOrg").textContent =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("org").value;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pTitle").textContent =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("title").value;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pSubtitle").textContent =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("subtitle").value;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pDate").textContent =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>"📅 " + document.getElementById("date").value;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pTime").textContent =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>"⏰ " + document.getElementById("time").value;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pVenue").textContent =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>"📍 " + document.getElementById("venue").value;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pMessage").textContent =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("message").value;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pBackTitle").textContent =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("backTitle").value;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pBackText").textContent =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("backText").value;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pFooter").textContent =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("footer").value;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">fields.forEach(id =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById(id)</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.addEventListener("input", update);</p>
-<p class="p1">});</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1">/* LOGO */</p>
-<p class="p2"><br></p>
-<p class="p1">document.getElementById("logoUpload")</p>
-<p class="p1">.addEventListener("change", function(e) {</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>const file = e.target.files[0];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>if (!file) return;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>const reader = new FileReader();</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>reader.onload = function(event) {</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>const img = document.getElementById("logoFront");</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>img.src = event.target.result;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>img.style.display = "block";</p>
-<p class="p1"><span class="Apple-converted-space">    </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>reader.readAsDataURL(file);</p>
-<p class="p1">});</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1">/* QR */</p>
-<p class="p2"><br></p>
-<p class="p1">document.getElementById("qrUpload")</p>
-<p class="p1">.addEventListener("change", function(e) {</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>const file = e.target.files[0];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>if (!file) return;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>const reader = new FileReader();</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>reader.onload = function(event) {</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>const img = document.getElementById("qrFront");</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>img.src = event.target.result;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>img.style.display = "block";</p>
-<p class="p1"><span class="Apple-converted-space">    </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>reader.readAsDataURL(file);</p>
-<p class="p1">});</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1">function sampleData() {</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("org").value =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>"ರಾಷ್ಟ್ರೀಯ ಸ್ವಯಂಸೇವಕ ಸಂಘ, ಹನುಮಂತನಗರ";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("title").value =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>"ವಸತಿ ಸಾಂಘಿಕ್";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("subtitle").value =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>"ಕುಮಾರಸ್ವಾಮಿ ವಸತಿ";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("date").value =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>"ಸೆಪ್ಟೆಂಬರ್ 13, 2026";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("time").value =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>"ಬೆಳಿಗ್ಗೆ 6:45 ರಿಂದ 8:00 ಗಂಟೆ";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("venue").value =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>"ಡೊಂಕನ್ ಮೈದಾನ, ಶಂಕರನಾಗ ಸರ್ಕಲ್";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("message").value =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>"ಸಮಾಜದ ಪ್ರತಿಯೊಬ್ಬರಲ್ಲೂ ರಾಷ್ಟ್ರಭಕ್ತಿ, ಸೇವಾ ಮನೋಭಾವ ಮತ್ತು ಸಂಘಟನಾ ಶಕ್ತಿಯನ್ನು ಬೆಳೆಸೋಣ.";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("backTitle").value =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>"ನಮ್ಮೊಂದಿಗೆ ಸೇರಿ";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("backText").value =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>"ಶಾಖೆ ಎಂದರೆ ಕೇವಲ ಒಂದು ಕಾರ್ಯಕ್ರಮವಲ್ಲ.\\n\\nಇದು ವ್ಯಕ್ತಿತ್ವ ನಿರ್ಮಾಣ, ಸಮಾಜ ಸಂಘಟನೆ ಮತ್ತು ರಾಷ್ಟ್ರ ಸೇವೆಯ ನಿರಂತರ ಪ್ರಕ್ರಿಯೆ.\\n\\nನಿಮ್ಮ ಕುಟುಂಬ ಮತ್ತು ಸ್ನೇಹಿತರೊಂದಿಗೆ ಭಾಗವಹಿಸಿ.";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("footer").value =</p>
-<p class="p1"><span class="Apple-converted-space">        </span>"10 ನಿಮಿಷ ಮುಂಚಿತವಾಗಿ ಆಗಮಿಸಿ";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>update();</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1">function resetData() {</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>fields.forEach(id =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById(id).value = "";</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>update();</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">update();</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/script&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+
+<header>
+    <h1>ರಾಷ್ಟ್ರೀಯ ಸ್ವಯಂಸೇವಕ ಸಂಘ, ಹನುಮಂತನಗರ</h1>
+</header>
+
+<div class="container">
+
+<div class="controls">
+
+<h2>✏️ ಪ್ರತಿ ವಿವರಗಳು</h2>
+
+<input id="org" value="ರಾಷ್ಟ್ರೀಯ ಸ್ವಯಂಸೇವಕ ಸಂಘ, ಹನುಮಂತನಗರ" readonly>
+
+<label>ವಸತಿ</label>
+<input id="title" value="Enter ವಸತಿ">
+
+<label>ಉಪವಸತಿ</label>
+<input id="subtitle" value="Enter ಉಪವಸತಿ">
+
+<label>ಕಾರ್ಯಕ್ರಮ</label>
+<input id="karyakrama" value="ಕಾರ್ಯವಿಸ್ತಾರ ಸಪ್ತಾಹ" readonly>
+
+<label>ದಿನಾಂಕ</label>
+<input id="date" value="2026 - ಸೆಪ್ಟೆಂಬರ್ 21 ರಿಂದ 27" readonly>
+
+<label>ಸಮಯ</label>
+<input id="time" value="">
+
+<label>ಸ್ಥಳ</label>
+<input id="venue" value="">
+
+<label>ಗೀತೆ</label>
+<textarea id="geete" readonly>
+ಎಲ್ಲಾ ಭೇದ ಮರೆತು ಬನ್ನಿರಿ ನಾವು ಸಮಾನ
+ಸಾರುವ ಇಂದು ಎಲ್ಲರು ಹಿಂದು ಇದುವೆ ನವಗಾನ
+
+ದುಡಿದರು ಕಾಣುತ ಕೇಶವರಂದು ಐಕ್ಯದ ಸುಂದರ ಕನಸು
+ಪಣತೊಡಿರಿಂದು ಮಾಡುವೆವೆಂದು ಎಲ್ಲವನೂ ನನಸು
+ಜಾತಿ ಮತಗಳ ಧನಿಕ ಬಡವರ ಭೇದವ ತರಬೇಡಿ
+ಬಿದ್ದವರನು ಮೇಲೆತ್ತುವ ಬನ್ನಿ ಎಲ್ಲರೂ ಕೈ ನೀಡಿ
+
+ಗಂಗೆ ತುಂಗೆ ಕಾವೇರಿಯ ಜಲ ನಮಗಾಗಿಯೆ ಎಂದು
+ಮನ ಮಾಡಿಂದು ದುಡಿಯಲು ಬಂಧು ಉತ್ಸಾಹದಿನಿಂದು
+ಪುಣ್ಯದ ಮಣ್ಣಿದು ಬೆಳೆಸಲು ಬಾ ಬಂಗಾರದ ಬೆಳೆಯನ್ನು
+ಬೆವರಿನ ಹೊಳೆಯೇ ಹರಿಯಲಿ ಇಂದು ಕೊಚ್ಚುತ ಕೊಳೆಯನ್ನು
+
+ಕೊಲೆ ಸುಲಿಗೆಗಳ ಅತ್ಯಾಚಾರದ ಕೊನೆಯಾಗಲಿ ಇಂದು
+ಸ್ನೇಹದ ಪ್ರೇಮದ ಭ್ರಾತೃತ್ವದ ಸೆಲೆ ಹರಿಯಲಿ ಎಂದೆಂದು
+ಕುಡಿಯುವುದೊಂದೇ ಜಲ ಉಸಿರಾಡುವುದೊಂದೆ ಗಾಳಿ
+ಹರಿಯುವುದೊಂದೇ ರಕ್ತವು ನಮ್ಮಲಿ ಭೇದವು ಏಕಾಗಿ?
+</textarea>
+
+<label>ಅಮೃತವಚನ</label>
+<input id="who" value="ಶ್ರೀ ಯೋಗಿ ಅರವಿಂದರ ಅಮೃತವಚನ">
+<textarea id="amrutavachana" value="">
+  ರಾಷ್ಟ್ರವೇ ನಮ್ಮ ದೇವರು.ರಾಷ್ಟ್ರೀಯತೆಯೇ ನಮ್ಮ ಧರ್ಮ. ರಾಷ್ಟ್ರೀಯತೆಗೆ ಸಾವಿಲ್ಲ. ಯಾವುದೇ ಶಸ್ತ್ರಾಸ್ತ್ರಗಳಿಂದಲೂ ಅದನ್ನು ನಾಶಪಡಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ.
+</textarea>
+
+<label>ಶ್ಲೋಕ</label>
+<textarea id="shloka" value="">
+ಯಥಾಚಿತ್ತಂ ತಥಾ ವಾಚ:
+ಯಥಾ ವಾಚ: ತತಾ ಕ್ರಿಯಾ: 
+ಚಿತ್ತೇ ವಾಚಿ ಕ್ರಿಯಾಯಾಂ ಚ 
+ಮಹತಾಂಏಕ ರೂಪತಾ 
+</textarea>
+<label>ಅರ್ಥ</label>
+<textarea id="meaning" value="">
+ಮನಸ್ಸಿನಂತೆ ಮಾತು, ಮಾತಿನಂತೆ ಕ್ರಿಯೆ,
+ಮನಸ್ಸು,ಮಾತು ಕ್ರಿಯೆಗಳಲ್ಲಿ ಮಹಾತ್ಮರು 
+ಒಂದೇ ಬಗೆ ಇರುತ್ತಾರೆ.
+</textarea>
+
+<label></label>
+<input id="backTitle" value="ಸಂಘ ಪ್ರಾರ್ಥನೆ" readonly >
+
+<label></label>
+<textarea id="backText" readonly>ನಮಸ್ತೇ ಸದಾ ವತ್ಸಲೇ ಮಾತೃಭೂಮೇ ⤴
+ತ್ವಯಾ ಹಿಂದು ಭೂಮೇ ಸುಖ°ವ್ ವರ್ಧಿತೋsಹಮ್ -----> 
+ಮಹಾ ಮಂಗಲೇ ಪುಣ್ಯ ಭೂಮೇ ತ್ವದರ್ಥೇ ⤵   
+ಪತತ್ವೇಷ ಕಾಯೋ ನಮಸ್ತೇ ನಮಸ್ತೇ 1  ----->
+
+ಪ್ರಭೋ ಶಕ್ತಿಮನ್ ಹಿಂದು ರಾಷ್ಟ್ರಾಂಗ ಭೂತಾ  ⤴
+ಇಮೇ ಸಾದರನ್  ತ್ವಾಮ್ ನಮಾಮೋ ವಯಮ್  ----->
+ತ್ವದೀಯಾಯ ಕಾರ್ಯಾಯ ಬದ್ಧಾ ಕಟೀಯಮ್  ⤵  
+ಶುಭಾ ಮಾಶಿಷನ್  ದೇಹಿ ತತ್ಪೂರ್ತಯೇ  ----->
+ಅಜಯ್ಯಾಂ ಚ ವಿಶ್ವಸ್ಯ ದೇಹೀಶ ಶಕ್ತಿಮ್  ⤴
+ಸುಶೀಲಂ ಜಗದ್ಯೇನ ನಮ್ರಂ ಭವೇತ್  ----->
+ಶ್ರುತಂ ಚೈವ ಯತ್  ಕಂಟ ಕಾ ಕೀರ್ಣ ಮಾರ್ಗಮ್ ⤵
+ಸ್ವಯಂ ಸ್ವೀಕೃತನ್ ನಃ ಸುಗಂ ಕಾರಯೇತ್ 2  ----->
+
+ಸಮುತ್ಕರ್ಷ ನಿಃ ಶ್ರೇಯ ಸಸ್ಯೈಕ ಮುಗ್ರಮ್  ⤴
+ಪರಂ ಸಾಧನನ್ನಾಮ ವೀರ ವ್ರತಮ್  ----->
+ತದನ್ತಃ ಸ್ಫುರ ತ್ವಕ್ಷಯಾ ಧ್ಯೇಯ ನಿಷ್ಠಾ ⤵
+ಹೃದನ್ತಃ ಪ್ರಜಾ ಗರ್ತು ತೀವ್ರಾಽನಿಶಮ್  ----->
+ವಿಜೇತ್ರೀ ಚ ನಃ ಸಂಹತಾ ಕಾರ್ಯ ಶಕ್ತಿರ್  ⤴
+ವಿಧಾಯಾಸ್ಯ ಧರ್ಮಸ್ಯ ಸಂರಕ್ಷಣಮ್  ----->
+ಪರಮ್ (ಪರ°ವ್) ವೈಭವನ್ನೇತು  ಮೇ ತತ್ ಸ್ವರಾಷ್ಟ್ರಮ್  ⤴
+ಸಮರ್ಥಾ ಭವತ್ವಾ ಶಿಷಾ ತೇ ಭೃಶಮ್ 3  ----->
+ಭಾರತ ಮಾತಾ ಕೀ ಜಯ್  -----></textarea>
+
+<label>Footer</label>
+<input id="footer" value="10 ನಿಮಿಷ ಮುಂಚಿತವಾಗಿ ಆಗಮಿಸಿ">
+
+<label>Logo</label>
+<input type="file" id="logoUpload" accept="image/*">
+
+<label>QR Code</label>
+<input type="file" id="qrUpload" accept="image/*">
+
+<button class="primary" onclick="window.print()">
+    🖨️ Print / Save PDF
+</button>
+
+<button class="secondary" onclick="sampleData()">
+    🔄 Sample Data
+</button>
+
+<button class="secondary" onclick="resetData()">
+    ♻️ Reset
+</button>
+
+</div>
+
+
+<div>
+
+<div class="preview-area">
+
+<!-- FRONT -->
+
+<div>
+<div class="side-title">FRONT SIDE</div>
+
+<div class="pamphlet" id="front">
+
+<div class="content">
+
+<img id="logoFront" class="logo">
+
+<div class="org" id="pOrg"></div>
+
+<div class="main-title" id="pTitle"></div>
+
+<div class="subtitle" id="pSubtitle"></div>
+
+<div class="info">
+<div id="pKaryakrama"></div>
+<div id="pDate"></div>
+<div id="pTime"></div>
+<div id="pVenue"></div>
+</div><hr>
+
+<div class="geete" id="pgeete"></div><hr>
+<div class="amrutavachanaHeading" id="pWho"></div>
+<div class="amrutavachana" id="pAmrutavachana"></div>
+<div class="shlokaHeading">ಶ್ಲೋಕ</div>
+<div class="shloka" id="pShloka"></div>
+
+<div class="meaningHeading">ಅರ್ಥ</div>
+<div class="meaning" id="pMeaning"></div>
+
+<img id="qrFront" class="qr">
+
+<div class="footer" id="pFooter"></div>
+
+</div>
+</div>
+</div>
+
+
+<!-- BACK -->
+
+<div>
+<div class="side-title">BACK SIDE</div>
+
+<div class="pamphlet">
+
+<div class="content">
+
+<div class="back-title" id="pBackTitle"></div>
+
+<div class="back-text" id="pBackText"></div><hr>
+<div id="panchanga">
+    <div class="pancha">
+        ಕಲಿಯುಗಾಬ್ದ 5128, ಶ್ರೀ ಶಾಲಿವಾಹನ ಶಕ 1949, ಶ್ರೀ ಪರಾಭವ ನಾಮ ಸಂವತ್ಸರ
+        ದಕ್ಷಿಣಾಯನ, ವರ್ಷ ಋತು, ಭಾದ್ರಪದ ಮಾಸ, ಶುಕ್ಲಪಕ್ಷ
+    </div><hr>
+    <div class="datee">21-09-2026</div>
+    <div class="datee">22-09-2026</div>
+    <div class="datee">23-09-2026</div>
+    <div class="datee">24-09-2026</div>
+    <div class="datee">25-09-2026</div>
+    <div class="datee">26-09-2026</div>
+    <div class="datee">27-09-2026</div>
+
+    
+    <div class="thiti">
+        <div >ದಶಮಿ</div>
+        <div >ಏಕಾದಶಿ</div>
+        <div >ದ್ವಾದಶಿ</div>
+        <div >ತ್ರಯೋದಶಿ</div>
+        <div >ಚತುರ್ದಶಿ</div>
+        <div >ಪೌರ್ಣಮಿ</div>
+        <div >ಪಾಡ್ಯಮಿ</div>
+    </div>
+
+    <div class="day">
+        <div >ಸೋಮವಾರ</div>
+        <div >ಮಂಗಳವಾರ</div>
+        <div >ಬುಧವಾರ</div>
+        <div >ಗುರುವಾರ</div>
+        <div >ಶುಕ್ರವಾರ</div>
+        <div >ಶನಿವಾರ</div>
+        <div >ಭಾನುವಾರ</div>
+    </div>
+
+    <div class="nakshatra">
+        <div >ಉತ್ತರಾಷಾಢಾ</div>
+        <div >ಶ್ರವಣ</div>
+        <div >ಶ್ರವಣ</div>
+        <div >ಧನಿಷ್ಠಾ</div>
+        <div >ಶತಭಿಷಾ</div>
+        <div >ಪೂರ್ವಭಾದ್ರಪದ</div>
+        <div >ಉತ್ತರಭಾದ್ರಪದ</div>
+    </div>
+
+</div>
+
+
+<div class="footer">
+🚩 ಸೇವೆ - ಸಂಘಟನೆ - ಸಂಸ್ಕಾರ
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const fields = [
+    "org",
+    "title",
+    "subtitle",
+    "date",
+    "time",
+    "venue",
+    "geete",
+    "backTitle",
+    "backText",
+    "footer",
+    "who",
+    "amrutavachana",
+    "shloka",
+    "meaning"
+
+];
+
+
+function update() {
+
+    document.getElementById("pOrg").textContent =
+        document.getElementById("org").value;
+
+    document.getElementById("pTitle").textContent =
+        document.getElementById("title").value;
+
+    document.getElementById("pSubtitle").textContent =
+        document.getElementById("subtitle").value;
+
+    document.getElementById("pKaryakrama").textContent =
+        document.getElementById("karyakrama").value;
+
+    document.getElementById("pDate").textContent =
+        "ದಿನಾಂಕ: " + document.getElementById("date").value;
+
+    document.getElementById("pTime").textContent =
+        "ಸಮಯ: " + document.getElementById("time").value;
+
+    document.getElementById("pVenue").textContent =
+        "ಸ್ಥಳ: " + document.getElementById("venue").value;
+
+    document.getElementById("pgeete").textContent =
+        document.getElementById("geete").value;
+
+    document.getElementById("pBackTitle").textContent =
+        document.getElementById("backTitle").value;
+
+    document.getElementById("pBackText").textContent =
+        document.getElementById("backText").value;
+
+    document.getElementById("pWho").textContent =
+        document.getElementById("who").value;
+
+    document.getElementById("pAmrutavachana").textContent =
+        document.getElementById("amrutavachana").value;
+
+    document.getElementById("pShloka").textContent =
+        document.getElementById("shloka").value;
+
+    document.getElementById("pMeaning").textContent =
+        document.getElementById("meaning").value;
+
+    document.getElementById("pFooter").textContent =
+        document.getElementById("footer").value;
+}
+
+fields.forEach(id => {
+    document.getElementById(id)
+        .addEventListener("input", update);
+});
+
+
+/* LOGO */
+
+document.getElementById("logoUpload")
+.addEventListener("change", function(e) {
+
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+
+        const img = document.getElementById("logoFront");
+
+        img.src = event.target.result;
+        img.style.display = "block";
+    };
+
+    reader.readAsDataURL(file);
+});
+
+
+/* QR */
+
+document.getElementById("qrUpload")
+.addEventListener("change", function(e) {
+
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+
+        const img = document.getElementById("qrFront");
+
+        img.src = event.target.result;
+        img.style.display = "block";
+    };
+
+    reader.readAsDataURL(file);
+});
+
+
+function sampleData() {
+
+    document.getElementById("org").value =
+        "ರಾಷ್ಟ್ರೀಯ ಸ್ವಯಂಸೇವಕ ಸಂಘ, ಹನುಮಂತನಗರ";
+
+    document.getElementById("title").value =
+        "ಕುಮಾರಸ್ವಾಮಿ ವಸತಿ";
+
+    document.getElementById("subtitle").value =
+        "ಸ್ಕಂದ ಉಪವಸತಿ";
+
+    document.getElementById("date").value =
+        "ಸೆಪ್ಟೆಂಬರ್ 21 ರಿಂದ 27 [2026]";
+
+    document.getElementById("time").value =
+        "ಸಾಯಂ 7:15 ರಿಂದ 8:15 ಗಂಟೆ";
+
+    document.getElementById("venue").value =
+        "ಡೊಂಕನ್ ಮೈದಾನ, ಶಂಕರನಾಗ ಸರ್ಕಲ್";
+
+    document.getElementById("geete").value =
+    document.getElementById("geete").value;
+
+    document.getElementById("backTitle").value =
+        "ಸಂಘ ಪ್ರಾರ್ಥನೆ";
+
+    document.getElementById("backText").value =
+        document.getElementById("backText").value;
+
+    document.getElementById("amrutavachana").value =
+        document.getElementById("amrutavachana").value;
+
+    document.getElementById("shloka").value =
+        document.getElementById("shloka").value;
+
+        
+    //document.getElementById("footer").value =
+        //"10 ನಿಮಿಷ ಮುಂಚಿತವಾಗಿ ಆಗಮಿಸಿ";
+
+    update();
+}
+
+
+function resetData() {
+
+    fields.forEach(id => {
+        document.getElementById(id).value = "";
+    });
+
+    update();
+}
+
+update();
+
+</script>
+
 </body>
 </html>
