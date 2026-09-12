@@ -1,0 +1,545 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2487.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="kn"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width,initial-scale=1.0"&gt;</p>
+<p class="p1">&lt;title&gt;A6 Two-Side Pamphlet Generator&lt;/title&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1">* {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box-sizing: border-box;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">body {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: Arial, "Noto Sans Kannada", sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #eee;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #222;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">header {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #222;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-align: center;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.container {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: grid;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>grid-template-columns: 320px 1fr;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gap: 25px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>max-width: 1300px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin: auto;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 20px;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.controls {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: white;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 18px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>height: fit-content;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.controls h2 {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 0;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">label {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: bold;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">input,</p>
+<p class="p1">textarea,</p>
+<p class="p1">select {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 9px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid #bbb;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 14px;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">textarea {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>min-height: 70px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>resize: vertical;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">button {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 11px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 7px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: bold;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.primary {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #d35400;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: white;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.secondary {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #333;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: white;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.preview-area {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gap: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>flex-wrap: wrap;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>justify-content: center;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.side-title {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 8px;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* A6 */</p>
+<p class="p1">.pamphlet {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 105mm;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>height: 148mm;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: white;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box-shadow: 0 5px 20px rgba(0,0,0,.25);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* Design */</p>
+<p class="p1">.pamphlet::before {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>content: "";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>top: 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>left: 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>right: 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>height: 12mm;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #e65100;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.content {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>z-index: 2;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 18mm 8mm 8mm;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>height: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-align: center;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.logo {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 25mm;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>height: 25mm;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>object-fit: contain;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin: 0 auto 5px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: none;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.org {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 3mm;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.main-title {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 25px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 900;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #b23b00;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 8mm;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.subtitle {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 17px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 5mm;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.info {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 8mm;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.7;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.message {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 8mm;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.6;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.qr {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 28mm;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>height: 28mm;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin: 6mm auto 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: none;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.footer {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>bottom: 5mm;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>left: 7mm;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>right: 7mm;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 11px;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.back-title {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 21px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #b23b00;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 6mm;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.back-text {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 13px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.65;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-align: left;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">@media(max-width:900px) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.container {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>grid-template-columns: 1fr;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* PRINT */</p>
+<p class="p1">@media print {</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>background: white;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>header,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.controls,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.side-title {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>display: none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.container {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>gap: 10mm;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>padding: 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.preview-area {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>gap: 10mm;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.pamphlet {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>box-shadow: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>page-break-inside: avoid;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>@page {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>size: A4;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>margin: 10mm;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1">}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;header&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1&gt;A6 Two-Side Pamphlet Generator&lt;/h1&gt;</p>
+<p class="p1">&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="container"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="controls"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;h2&gt;✏️ Pamphlet Details&lt;/h2&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;label&gt;Organization&lt;/label&gt;</p>
+<p class="p1">&lt;input id="org" value="ರಾಷ್ಟ್ರೀಯ ಸ್ವಯಂಸೇವಕ ಸಂಘ, ಹನುಮಂತನಗರ"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;label&gt;Main Title&lt;/label&gt;</p>
+<p class="p1">&lt;input id="title" value="ವಸತಿ ಸಾಂಘಿಕ್"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;label&gt;Subtitle&lt;/label&gt;</p>
+<p class="p1">&lt;input id="subtitle" value="ಆಮಂತ್ರಣ"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;label&gt;Date&lt;/label&gt;</p>
+<p class="p1">&lt;input id="date" value="ಸೆಪ್ಟೆಂಬರ್ 13, 2026"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;label&gt;Time&lt;/label&gt;</p>
+<p class="p1">&lt;input id="time" value="ಬೆಳಿಗ್ಗೆ 6:45 ರಿಂದ 8:00 ಗಂಟೆ"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;label&gt;Venue&lt;/label&gt;</p>
+<p class="p1">&lt;input id="venue" value="ಡೊಂಕನ್ ಮೈದಾನ, ಶಂಕರನಾಗ ಸರ್ಕಲ್"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;label&gt;Main Message&lt;/label&gt;</p>
+<p class="p1">&lt;textarea id="message"&gt;ಸಮಾಜದ ಪ್ರತಿಯೊಬ್ಬರಲ್ಲೂ ರಾಷ್ಟ್ರಭಕ್ತಿ, ಸೇವಾ ಮನೋಭಾವ ಮತ್ತು ಸಂಘಟನಾ ಶಕ್ತಿಯನ್ನು ಬೆಳೆಸೋಣ.&lt;/textarea&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;label&gt;Back Page Heading&lt;/label&gt;</p>
+<p class="p1">&lt;input id="backTitle" value="ನಮ್ಮೊಂದಿಗೆ ಸೇರಿ"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;label&gt;Back Page Content&lt;/label&gt;</p>
+<p class="p1">&lt;textarea id="backText"&gt;ಶಾಖೆ ಎಂದರೆ ಕೇವಲ ಒಂದು ಕಾರ್ಯಕ್ರಮವಲ್ಲ.</p>
+<p class="p2"><br></p>
+<p class="p1">ಇದು ವ್ಯಕ್ತಿತ್ವ ನಿರ್ಮಾಣ, ಸಮಾಜ ಸಂಘಟನೆ ಮತ್ತು ರಾಷ್ಟ್ರ ಸೇವೆಯ ನಿರಂತರ ಪ್ರಕ್ರಿಯೆ.</p>
+<p class="p2"><br></p>
+<p class="p1">ನಿಮ್ಮ ಕುಟುಂಬ ಮತ್ತು ಸ್ನೇಹಿತರೊಂದಿಗೆ ಭಾಗವಹಿಸಿ.&lt;/textarea&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;label&gt;Footer&lt;/label&gt;</p>
+<p class="p1">&lt;input id="footer" value="10 ನಿಮಿಷ ಮುಂಚಿತವಾಗಿ ಆಗಮಿಸಿ"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;label&gt;Logo&lt;/label&gt;</p>
+<p class="p1">&lt;input type="file" id="logoUpload" accept="image/*"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;label&gt;QR Code&lt;/label&gt;</p>
+<p class="p1">&lt;input type="file" id="qrUpload" accept="image/*"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;button class="primary" onclick="window.print()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>🖨️ Print / Save PDF</p>
+<p class="p1">&lt;/button&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;button class="secondary" onclick="sampleData()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>🔄 Sample Data</p>
+<p class="p1">&lt;/button&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;button class="secondary" onclick="resetData()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>♻️ Reset</p>
+<p class="p1">&lt;/button&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="preview-area"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- FRONT --&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;div class="side-title"&gt;FRONT SIDE&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="pamphlet" id="front"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="content"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;img id="logoFront" class="logo"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="org" id="pOrg"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="main-title" id="pTitle"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="subtitle" id="pSubtitle"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="info"&gt;</p>
+<p class="p1">&lt;div id="pDate"&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;div id="pTime"&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;div id="pVenue"&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="message" id="pMessage"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;img id="qrFront" class="qr"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="footer" id="pFooter"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- BACK --&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;div class="side-title"&gt;BACK SIDE&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="pamphlet"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="content"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="back-title" id="pBackTitle"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="back-text" id="pBackText"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div style="margin-top:15mm;font-size:13px;"&gt;</p>
+<p class="p1">🚩 सेवा • ಸಂಘಟನೆ • ಸಂಸ್ಕಾರ</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="footer"&gt;</p>
+<p class="p1">ರಾಷ್ಟ್ರೀಯ ಸ್ವಯಂಸೇವಕ ಸಂಘ, ಹನುಮಂತನಗರ</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">const fields = [</p>
+<p class="p1"><span class="Apple-converted-space">    </span>"org",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>"title",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>"subtitle",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>"date",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>"time",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>"venue",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>"message",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>"backTitle",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>"backText",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>"footer"</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">function update() {</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pOrg").textContent =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("org").value;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pTitle").textContent =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("title").value;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pSubtitle").textContent =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("subtitle").value;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pDate").textContent =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"📅 " + document.getElementById("date").value;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pTime").textContent =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"⏰ " + document.getElementById("time").value;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pVenue").textContent =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"📍 " + document.getElementById("venue").value;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pMessage").textContent =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("message").value;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pBackTitle").textContent =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("backTitle").value;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pBackText").textContent =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("backText").value;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("pFooter").textContent =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("footer").value;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">fields.forEach(id =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById(id)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.addEventListener("input", update);</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">/* LOGO */</p>
+<p class="p2"><br></p>
+<p class="p1">document.getElementById("logoUpload")</p>
+<p class="p1">.addEventListener("change", function(e) {</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const file = e.target.files[0];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (!file) return;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const reader = new FileReader();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>reader.onload = function(event) {</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const img = document.getElementById("logoFront");</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>img.src = event.target.result;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>img.style.display = "block";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>reader.readAsDataURL(file);</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">/* QR */</p>
+<p class="p2"><br></p>
+<p class="p1">document.getElementById("qrUpload")</p>
+<p class="p1">.addEventListener("change", function(e) {</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const file = e.target.files[0];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (!file) return;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const reader = new FileReader();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>reader.onload = function(event) {</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const img = document.getElementById("qrFront");</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>img.src = event.target.result;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>img.style.display = "block";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>reader.readAsDataURL(file);</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">function sampleData() {</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("org").value =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"ರಾಷ್ಟ್ರೀಯ ಸ್ವಯಂಸೇವಕ ಸಂಘ, ಹನುಮಂತನಗರ";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("title").value =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"ವಸತಿ ಸಾಂಘಿಕ್";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("subtitle").value =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"ಕುಮಾರಸ್ವಾಮಿ ವಸತಿ";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("date").value =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"ಸೆಪ್ಟೆಂಬರ್ 13, 2026";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("time").value =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"ಬೆಳಿಗ್ಗೆ 6:45 ರಿಂದ 8:00 ಗಂಟೆ";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("venue").value =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"ಡೊಂಕನ್ ಮೈದಾನ, ಶಂಕರನಾಗ ಸರ್ಕಲ್";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("message").value =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"ಸಮಾಜದ ಪ್ರತಿಯೊಬ್ಬರಲ್ಲೂ ರಾಷ್ಟ್ರಭಕ್ತಿ, ಸೇವಾ ಮನೋಭಾವ ಮತ್ತು ಸಂಘಟನಾ ಶಕ್ತಿಯನ್ನು ಬೆಳೆಸೋಣ.";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("backTitle").value =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"ನಮ್ಮೊಂದಿಗೆ ಸೇರಿ";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("backText").value =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"ಶಾಖೆ ಎಂದರೆ ಕೇವಲ ಒಂದು ಕಾರ್ಯಕ್ರಮವಲ್ಲ.\\n\\nಇದು ವ್ಯಕ್ತಿತ್ವ ನಿರ್ಮಾಣ, ಸಮಾಜ ಸಂಘಟನೆ ಮತ್ತು ರಾಷ್ಟ್ರ ಸೇವೆಯ ನಿರಂತರ ಪ್ರಕ್ರಿಯೆ.\\n\\nನಿಮ್ಮ ಕುಟುಂಬ ಮತ್ತು ಸ್ನೇಹಿತರೊಂದಿಗೆ ಭಾಗವಹಿಸಿ.";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("footer").value =</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"10 ನಿಮಿಷ ಮುಂಚಿತವಾಗಿ ಆಗಮಿಸಿ";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>update();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">function resetData() {</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>fields.forEach(id =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById(id).value = "";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>update();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">update();</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
